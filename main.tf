@@ -11,6 +11,7 @@ resource "aws_instance" "myec2" {
                 sudo systemctl start docker
                 sudo groupadd docker
                 sudo usermod -aG docker $USER
+                sudo chmod 777 /var/run/docker.sock
                 newgrp docker
                 docker run -d --rm --name jenkins     -p 8080:8080 -p 50000:50000     tushar09/jenkinspipeline:version1
                 sudo yum install java-1.8.0-openjdk -y 
