@@ -1,0 +1,27 @@
+version: '3.2'
+services:
+  backend_demo:
+    build: .
+    depends_on:
+      - mongo
+    environment:
+      PORT: '51005'
+      MONGO_DB_URI: 'mongodb://mongo:27017/backend_demo'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:51005/api/status"]
+      interval: 10m
+      timeout: 10s
+      retries: 3
+    ports: 
+      - 51005:51005
+    restart: on-failure
+  mongo:
+    image: mongo:latest
+    expose:
+      - 27017
+    restart: on-failure
+    volumes:
+      - data:/data/db
+    
+volumes:
+  data:
